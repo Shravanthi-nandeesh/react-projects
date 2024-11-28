@@ -33,7 +33,7 @@ const Home = () => {
                 <View style={styles.HomePage}>
                     <Welcome />
                     <PopularJobs />
-                    <NearByJobs />
+                    {/* <NearByJobs /> */}
                 </View>
 
             </ScrollView>
