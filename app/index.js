@@ -9,7 +9,8 @@ import HeaderLeftBtn from "../components/common/HeaderLeftBtn";
 import HeaderRightBtn from "../components/common/HeaderRightBtn";
 const Home = () => {
     const router = useRouter();
-
+    const [search, setSearch]  = useState('');
+    console.log(search,"search")
     return (
         <SafeAreaView style={styles.SafeAreaView}>
             <StatusBar
@@ -31,9 +32,10 @@ const Home = () => {
             />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.HomePage}>
-                    <Welcome />
+                    <Welcome
+                    />
                     <PopularJobs />
-                    {/* <NearByJobs /> */}
+                    <NearByJobs />
                 </View>
 
             </ScrollView>

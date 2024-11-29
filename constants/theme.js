@@ -1,12 +1,13 @@
 export const COLORS = {
     primary: "#3f569c",
     secondary: "#1cd42a",
-    tertiary: "",
+    tertiary: "##5875b9",
     white: "#fff",
     black: "",
     background: "#f5f5f5",
-    grey: "#c3f0ba",
-    grey1: "#757575"
+    grey: "#ebebeb",
+    grey1: "#757575",
+
 }
 
 export const FONT = {

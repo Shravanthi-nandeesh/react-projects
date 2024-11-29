@@ -32,7 +32,7 @@ const jobsCardStyle = StyleSheet.create({
         width: "100%",
         height:"100%",
         borderRadius:SPACING.xSmall,
-        backgroundColor:COLORS.grey
+        backgroundColor:COLORS.white
     },
     jobInfoWrapper: {
         marginTop: SPACING.medium
@@ -40,7 +40,8 @@ const jobsCardStyle = StyleSheet.create({
 
     companyName: {
         fontWeight: FONT.bold,
-        fontSize: SIZES.medium, color:COLORS.grey1
+        fontSize: SIZES.medium, 
+        color:COLORS.grey1
     },
 
     jobTitle: {
@@ -49,6 +50,12 @@ const jobsCardStyle = StyleSheet.create({
         marginTop: SPACING.medium,
        
     },
+    location:{
+        marginTop:SPACING.small,
+        fontWeight: FONT.bold,
+        fontSize: SIZES.medium, 
+        color:COLORS.grey1
+    }
 
 });
 
