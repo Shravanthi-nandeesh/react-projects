@@ -1,53 +1,35 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Get Started Without a Framework
 
-# Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Step 1: Creating a new application
 
-To start Metro, run the following command from the _root_ of your React Native project:
+```bash
+# using npm
+npm uninstall -g react-native-cli @react-native-community/cli
+
+npx @react-native-community/cli@latest init AwesomeProject
+```
+
+## Step 2: Start Metro
+
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ app:
 
 ```bash
 # using npm
 npm start
 
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
+## Step 3: Start your application
 npm run android
 
-# OR using Yarn
-yarn android
-```
+## Step 4: Steps to change the app icon follow the url
+https://youtu.be/FRCWWvlTubQ
 
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
+## Step 5: Modifying your app
 Now that you have successfully run the app, let's modify it.
 
 1. Open `App.tsx` in your text editor of choice and edit some lines.
@@ -55,25 +37,193 @@ Now that you have successfully run the app, let's modify it.
 
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-## Congratulations! :tada:
+### Add Custom fonts
 
-You've successfully run and modified your React Native App. :partying_face:
+1. Download the fonts from the google font
+2. Create a fonts folder in the assets folder and add the downloaded font to this folder.
+3. Create `react-native.config.js` file in the folder.
 
-### Now what?
+```bash
+# change the path based on the folder placement
+module.exports={
+    assets: ['./assets/fonts']
+}
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+![alt text](image.png)
 
-# Troubleshooting
+4. Execute the below comment to link the assets to the project.
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+   ```bash
+   npx react-native-asset
+   ```
 
-# Learn More
 
-To learn more about React Native, take a look at the following resources:
+# React native animation
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+>**Note**: To create the react native animation we are using reanimated package for react-native.
+
+>**Fixing the react-native-reanimated execution issues refer the below url**
+>
+> https://github.com/software-mansion/react-native-reanimated/issues/4726
+
+```bash
+npm install "react-native-reanimated": "^3.0.0-rc.3"
+```
+
+Learn about react native react-native-reanimated.
+>Link : https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/your-first-animation/
+
+# Custom react -native- drawer
+
+1. Set up to add the react-drawer to the app.
+
+Import and create the states for drawer stack and navigator
+```bash
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+```
+Add the safearea and navigationncontainer , drawer navigation block in app return.
+
+```bash
+function App(): React.JSX.Element {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Drawer.Navigator >
+          <Drawer.Screen name="Home" component={Welcome} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+      
+    </SafeAreaProvider>
+  );
+}
+```
+Customize drawer 
+
+```bash
+ <SafeAreaProvider>
+      <NavigationContainer>
+        <Drawer.Navigator 
+         drawerContent={props => <CustomDrawer {...props} />}
+        >
+          <Drawer.Screen name="Home" component={Welcome} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+      
+    </SafeAreaProvider>
+```
+customDrawer.tsx
+```bash
+const CustomDrawer = (props:any) => {
+    return (
+        <View style={styles.drawerContent}>
+            <DrawerContentScrollView {...props}>
+                <View style={styles.EditprofileImageSec}>
+                </View>
+                <View style={styles.profileImageSec}>
+                    <Image source={require("../assets/menu.png")} style={styles.profileImage} />
+                    <Text style={styles.userName}>Shravanthi A N</Text>
+
+                </View>
+                <DrawerItemList {...props} />
+                <DrawerItem label="Sign Out" onPress={() => Logout()} />
+            </DrawerContentScrollView>
+        </View>
+    )
+}
+
+```
+# Documentaion about react native reanimated
+
+### Using an Animated component
+
+* Let's start by having something that we could see on the screen. First, to create an animatable component you need to import an Animated object:
+
+```bash
+import Animated from 'react-native-reanimated';
+```
+This Animated object wraps React Native built-ins such as View, ScrollView or FlatList.
+
+You use these components as any other JSX components:
+
+
+```bash
+import Animated from 'react-native-reanimated';
+
+export default function App() {
+  return (
+    <Animated.View
+      style={{
+        width: 100,
+        height: 100,
+        backgroundColor: 'violet',
+      }}
+    />
+  );
+}
+```
+
+### Defining a shared value
+A shared value is a driving factor of all your animations. You can think of it as a React state which is automagically kept in sync between the “JavaScript” and the “native” side of your app (hence the name). You create shared values using a `useSharedValue` hook:
+
+```bash
+import { useSharedValue } from 'react-native-reanimated';
+```
+
+As with any other React hook, you need to define it in your component's body. In a shared value, you can store any JS value like `number`, `string` or `boolean` but also data structures such as `array` and `object`.
+
+```bash
+import Animated, { useSharedValue } from 'react-native-reanimated';
+
+export default function App() {
+  const width = useSharedValue(100);
+
+  return (
+    <Animated.View
+      style={{
+        width,
+        height: 100,
+        backgroundColor: 'violet',
+      }}
+    />
+  );
+}
+```
+### Using a shared value
+Let's create a very simple animation that will animate a `width` of an element. We'll make it expand by `50px` on each button press. We can do this by modifying a shared value connected to the `width` property of an `Animated.View` component.
+
+Values stored in shared values are accessed and modified by their `.value` property.
+
+There's no setter or anything - you simply mutate the `.value` property.
+
+Let's define a `handlePress` function inside of which we'll modify the shared value:
+
+```bash
+import { Button, View } from 'react-native';
+import Animated, { useSharedValue } from 'react-native-reanimated';
+
+export default function App() {
+  const width = useSharedValue(100);
+
+  const handlePress = () => {
+    width.value = width.value + 50;
+  };
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center' }}>
+      <Animated.View
+        style={{
+          width,
+          height: 100,
+          backgroundColor: 'violet',
+        }}
+      />
+      <Button onPress={handlePress} title="Click me" />
+    </View>
+  );
+}
+```
