@@ -1,8 +1,6 @@
 # Get Started Without a Framework
 
-
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Creating a new application
 
@@ -24,12 +22,15 @@ npm start
 ```
 
 ## Step 3: Start your application
+
 npm run android
 
 ## Step 4: Steps to change the app icon follow the url
+
 https://youtu.be/FRCWWvlTubQ
 
 ## Step 5: Modifying your app
+
 Now that you have successfully run the app, let's modify it.
 
 1. Open `App.tsx` in your text editor of choice and edit some lines.
@@ -58,12 +59,11 @@ module.exports={
    npx react-native-asset
    ```
 
-
 # React native animation
 
->**Note**: To create the react native animation we are using reanimated package for react-native.
+> **Note**: To create the react native animation we are using reanimated package for react-native.
 
->**Fixing the react-native-reanimated execution issues refer the below url**
+> **Fixing the react-native-reanimated execution issues refer the below url**
 >
 > https://github.com/software-mansion/react-native-reanimated/issues/4726
 
@@ -72,13 +72,15 @@ npm install "react-native-reanimated": "^3.0.0-rc.3"
 ```
 
 Learn about react native react-native-reanimated.
->Link : https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/your-first-animation/
+
+> Link : https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/your-first-animation/
 
 # Custom react -native- drawer
 
 1. Set up to add the react-drawer to the app.
 
 Import and create the states for drawer stack and navigator
+
 ```bash
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -86,6 +88,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 ```
+
 Add the safearea and navigationncontainer , drawer navigation block in app return.
 
 ```bash
@@ -97,26 +100,29 @@ function App(): React.JSX.Element {
           <Drawer.Screen name="Home" component={Welcome} />
         </Drawer.Navigator>
       </NavigationContainer>
-      
+
     </SafeAreaProvider>
   );
 }
 ```
-Customize drawer 
+
+Customize drawer
 
 ```bash
  <SafeAreaProvider>
       <NavigationContainer>
-        <Drawer.Navigator 
+        <Drawer.Navigator
          drawerContent={props => <CustomDrawer {...props} />}
         >
           <Drawer.Screen name="Home" component={Welcome} />
         </Drawer.Navigator>
       </NavigationContainer>
-      
+
     </SafeAreaProvider>
 ```
+
 customDrawer.tsx
+
 ```bash
 const CustomDrawer = (props:any) => {
     return (
@@ -137,19 +143,68 @@ const CustomDrawer = (props:any) => {
 }
 
 ```
+
+# Add navigator along with drawer feature
+
+1. Create the stack for navigation
+
+```bash
+const Stack = createNativeStackNavigator();
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+```
+
+2. Use it in a stack.navigator
+
+```bash
+# Using both Drawer.Navigator and stack.navigator inside the single NavigationContainer container is not possible. so add the stack as base navigator and add drawer inside that as show in the below code snippet.
+
+ <NavigationContainer>
+
+        <Stack.Navigator>
+          <Stack.Screen name="DrawerList" component={MyDrawer} options={{ headerShown: false }} />
+          <Stack.Screen name="Animated styles and props" component={AnimatedStylesandProps} />
+          <Stack.Screen name="Animating props" component={Animatingprops} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+
+        const MyDrawer: React.FC = () => (
+    <Drawer.Navigator
+      drawerContent={props => <CustomDrawer {...props} />}
+    >
+      <Drawer.Screen name="Animated component" component={ReanimatedIndex} options={{ headerTitle: '' }} />
+      <Drawer.Screen name="With Spring" component={WithSpring} options={{ headerTitle: '' }} />
+    </Drawer.Navigator>
+  )
+
+```
+
+3. Navigating between the screens.
+- To access the navigation between the screens each screen should contain the useNavigation()  , DrawerNavigationProp() to specify the properties and the type of the each navigation page name should be given as shown below
+```bash
+
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+type NavigatorList = {
+    "With Spring": undefined;
+};
+  const navigation = useNavigation<DrawerNavigationProp<NavigatorList>>();
+
+```
+
 # Documentaion about react native reanimated
 
 ### Using an Animated component
 
-* Let's start by having something that we could see on the screen. First, to create an animatable component you need to import an Animated object:
+- Let's start by having something that we could see on the screen. First, to create an animatable component you need to import an Animated object:
 
 ```bash
 import Animated from 'react-native-reanimated';
 ```
+
 This Animated object wraps React Native built-ins such as View, ScrollView or FlatList.
 
 You use these components as any other JSX components:
-
 
 ```bash
 import Animated from 'react-native-reanimated';
@@ -168,6 +223,7 @@ export default function App() {
 ```
 
 ### Defining a shared value
+
 A shared value is a driving factor of all your animations. You can think of it as a React state which is automagically kept in sync between the “JavaScript” and the “native” side of your app (hence the name). You create shared values using a `useSharedValue` hook:
 
 ```bash
@@ -193,7 +249,9 @@ export default function App() {
   );
 }
 ```
+
 ### Using a shared value
+
 Let's create a very simple animation that will animate a `width` of an element. We'll make it expand by `50px` on each button press. We can do this by modifying a shared value connected to the `width` property of an `Animated.View` component.
 
 Values stored in shared values are accessed and modified by their `.value` property.

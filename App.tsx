@@ -1,116 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import {  StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { COLORS, SPACING } from './constants';
+import CustomDrawer from './components/CustomDrawer';
+import ReanimatedIndex from './Screens/AnimationScreens/ReanimatedIndex';
+import WithSpring from './Screens/AnimationScreens/WithSpring';
+const Drawer = createDrawerNavigator();
 
-import React, { useState } from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createNativeStackNavigator();
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// Only import react-native-gesture-handler on native platforms
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';  
-import Welcome from './components/Welcome/Welcome';
-
-import { createStaticNavigation } from '@react-navigation/native';
-import NearByJobs from './components/NearBy/NearBy';
-import { COLORS, SIZES } from './constants';
-import { useNavigation } from '@react-navigation/native';
-import PopularJobs from './components/PopularJobs/PopularJobs';
-import HeaderLeftBtn from './components/common/HeaderLeftBtn';
-import HeaderRightBtn from './components/common/HeaderRightBtn';
-import JobDetails from './components/jobDetails/JobDetails';
-import { StackScreenProps } from '@react-navigation/stack';
-import { createStackNavigator } from '@react-navigation/stack';
-
-// Use StackScreenProps to type the props for the JobDetails screen
-type JobDetailsProps = StackScreenProps<RootStackParamList, 'JobDetails'>;
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Home: {
-      screen: Welcome,
-      options: {
-        title: 'Overview',
-      },
-    },
-    Details: NearByJobs,
-  },
-});
-
-const Navigation = createStaticNavigation(RootStack);
-
-type RootStackParamList = {
-  PopularJobs: undefined; // No params for PopularJobs screen
-  JobDetails: { id: string }; // JobDetails expects a parameter `id`,
-  Home:undefined
-};
-
-const Stack = createStackNavigator<RootStackParamList>(); // Specify the type for the stack
-
-const HomeScreen = () => {
-  const navigation = useNavigation();
-  const [search, setSearch] = useState('');
-  // console.log(search, "search");
-
-  return (
-      <SafeAreaView style={styles.SafeAreaView}>
-          <StatusBar
-              barStyle={'light-content'}
-              backgroundColor={COLORS.primary}
-          />
-          {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-              <View style={styles.HomePage}>
-                  <Welcome />
-                  <PopularJobs />
-                  <NearByJobs />
-              </View>
-          {/* </ScrollView> */}
-      </SafeAreaView>
-  );
-};
-
-
+import AnimatedStylesandProps from './Screens/AnimationScreens/AnimatedStylesandProps';
+import Animatingprops from './Screens/AnimationScreens/Animatingprops';
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  //TODO: Use these commented color changing feature when handling the color change of the top phone view.
+  // const isDarkMode = useColorScheme() === 'dark';
+  // const backgroundStyle = {
+  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+  const MyDrawer: React.FC = () => (
+    <Drawer.Navigator
+      drawerContent={props => <CustomDrawer {...props} />}
+    >
+      <Drawer.Screen name="Animated component" component={ReanimatedIndex} options={{ headerTitle: '' }} />
+      <Drawer.Screen name="With Spring" component={WithSpring} options={{ headerTitle: '' }} />
+    </Drawer.Navigator>
+  )
   return (
-    <NavigationContainer>  
-        <Stack.Navigator
-            screenOptions={{
-                headerStyle: { backgroundColor: COLORS.background },
-                headerShadowVisible: false,
-                headerLeft: () => <HeaderLeftBtn handlePress={undefined} />,
-                headerRight: () => <HeaderRightBtn handlePress={undefined} />,
-                headerTitle: "",
-            }}
-        >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="JobDetails" component={JobDetails} />
+    <SafeAreaProvider>
+      <StatusBar barStyle={'light-content'} backgroundColor={COLORS.secondary} />
+      <NavigationContainer>
+
+        <Stack.Navigator>
+          <Stack.Screen name="DrawerList" component={MyDrawer} options={{ headerShown: false }} />
+          <Stack.Screen name="Animated styles and props" component={AnimatedStylesandProps} />
+          <Stack.Screen name="Animating props" component={Animatingprops} />
+          
         </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
@@ -118,13 +49,9 @@ const styles = StyleSheet.create({
   SafeAreaView: {
     flex: 1,
     backgroundColor: COLORS.background,
-    justifyContent: "center",
-    // alignItems: "center"
+    alignItems: "center",
+    paddingHorizontal: SPACING.medium,
   },
-  HomePage: {
-    flex: 1,
-    padding: SIZES.medium
-  }
-})
+});
 
 export default App;
